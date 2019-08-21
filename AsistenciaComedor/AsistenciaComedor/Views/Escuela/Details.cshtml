@@ -1,0 +1,43 @@
+﻿@model AsistenciaComedor.Data.Entities.Escuela
+
+@{
+    ViewData["Title"] = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalles de la Escuela</h2>
+
+<div>
+    <h4>Escuela</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.codigo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.direccionRegional)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.direccionRegional)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-success">Rregresar</a>
+</div>
