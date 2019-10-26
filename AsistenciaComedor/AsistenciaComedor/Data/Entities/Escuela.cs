@@ -7,7 +7,7 @@ namespace AsistenciaComedor.Data.Entities
         public int Id { get; set; }
 
         [Display(Name = "Nombre")]
-        [MaxLength(20, ErrorMessage = "EL Campo {0} no puede tener mas de {1} caracteres.")]
+        [MaxLength(25, ErrorMessage = "EL Campo {0} no puede tener mas de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string nombre { get; set; }
 

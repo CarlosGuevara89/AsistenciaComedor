@@ -11,5 +11,8 @@ namespace AsistenciaComedor.Data
         }
 
         public DbSet<Escuela> Escuelas { get; set; }
+        public DbSet<Estudiante> Estudiantes { get; set; }
+        public DbSet<Nivel> Niveles{ get; set; }
+        public DbSet<Asistencia> Asistencias { get; set; }
     }
 }
