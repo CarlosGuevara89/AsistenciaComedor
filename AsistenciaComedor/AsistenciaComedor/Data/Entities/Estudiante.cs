@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AsistenciaComedor.Data.Entities
 {
@@ -23,7 +22,6 @@ namespace AsistenciaComedor.Data.Entities
         public string apellido { get; set; }
 
         [Display(Name = "Edad")]
-        [MaxLength(3, ErrorMessage = "EL Campo {0} no puede tener mas de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int edad { get; set; }
 

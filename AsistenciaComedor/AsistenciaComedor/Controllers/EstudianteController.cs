@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AsistenciaComedor.Data;
 using AsistenciaComedor.Helpers;
 using AsistenciaComedor.Models;
@@ -12,12 +13,15 @@ namespace AsistenciaComedor.Controllers
     {
         private readonly DataContext _dataContext;
         private readonly ICombosHelper _combosHelper;
+        private readonly IConverterHelper _converterHelper;
 
         public EstudianteController(DataContext dataContext,
-                                    ICombosHelper combosHelper)
+                                    ICombosHelper combosHelper,
+                                    IConverterHelper converterHelper)
         {
             _dataContext = dataContext;
             _combosHelper = combosHelper;
+            _converterHelper = converterHelper;
         }
 
         //Get: Estudiantes
@@ -27,6 +31,7 @@ namespace AsistenciaComedor.Controllers
                 .Include(e => e.Nivel));
         }
 
+        //Get: Add Estudiante
         public ActionResult AddEstudent()
         {
             var model = new EstudianteViewModel
@@ -38,18 +43,61 @@ namespace AsistenciaComedor.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProperty(PropertyViewModel model)
+        public async Task<IActionResult> AddEstudent(EstudianteViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var property = await _converterhelper.ToPropertyAsync(model, true);
-                _dataContext.Properties.Add(property);
+                var estudiante = await _converterHelper.ToEstudianteAsync(model, true);
+                _dataContext.Estudiantes.Add(estudiante);
                 await _dataContext.SaveChangesAsync();
-                return RedirectToAction($"Details/{model.OwnerId}");
+                return RedirectToAction(nameof(Index));
+            }
+            else if (model == null)
+            {
+                model.Niveles = _combosHelper.GetComboNivel();
+                return View(model);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Ya se encuentra registrado...");
+                model.Niveles = _combosHelper.GetComboNivel();
+                return View(model);
             }
 
-            model.PropertyTypes = _comboshelper.GetComboPropertyTypes();
+        } 
+        
+        //Get: Edit Estudiante
+        public async Task<IActionResult> EditEstudiante(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var estudiante = await _dataContext.Estudiantes
+                .Include(e => e.Nivel)
+                .FirstOrDefaultAsync(e => e.Id == id);
+            if (estudiante == null)
+            {
+                return NotFound();
+            }
+
+            var model = _converterHelper.ToEstudianteViewModel(estudiante);
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditEstudiante(EstudianteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var estudiante = await _converterHelper.ToEstudianteAsync(model, false);
+                _dataContext.Estudiantes.Update(estudiante);
+                await _dataContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+          
+                return View(model);
         }
 
     }
