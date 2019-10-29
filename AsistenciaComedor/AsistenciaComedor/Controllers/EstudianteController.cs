@@ -4,6 +4,7 @@ using AsistenciaComedor.Data;
 using AsistenciaComedor.Helpers;
 using AsistenciaComedor.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -27,6 +28,9 @@ namespace AsistenciaComedor.Controllers
         //Get: Estudiantes
         public ActionResult Index()
         {
+            var items = _combosHelper.GetComboNivel();
+            ViewBag.Niveles = items;
+
             return View(_dataContext.Estudiantes
                 .Include(e => e.Nivel));
         }
@@ -64,12 +68,12 @@ namespace AsistenciaComedor.Controllers
                 return View(model);
             }
 
-        } 
-        
+        }
+
         //Get: Edit Estudiante
         public async Task<IActionResult> EditEstudiante(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -96,8 +100,27 @@ namespace AsistenciaComedor.Controllers
                 await _dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-          
-                return View(model);
+
+            return View(model);
+        } 
+
+        public async Task<IActionResult>DeleteEstudiante(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var estudiante = await _dataContext.Estudiantes
+                .Include(e => e.Nivel)
+                .FirstOrDefaultAsync(e => e.Id == id.Value);
+            if (estudiante == null)
+            {
+                return NotFound();
+            }
+            _dataContext.Estudiantes.Remove(estudiante);
+            await _dataContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
     }

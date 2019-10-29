@@ -4,65 +4,102 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<h2>Lista de estudiantes</h2>
+<link rel="stylesheet" href="~/css/jquery.dataTables.min.css" />
+<div class="panel panel-heading text-center">
+    <h2>Lista de Estudiantes</h2>
+</div>
 
 <p>
-    <a asp-action="AddEstudent" class="btn btn-primary">Ingresar nuevo estudiante</a>
+    <a asp-action="AddEstudent" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Ingresar nuevo estudiante</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Cédula
-            </th>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Apellidos
-            </th>
-            <th>
-                Edad
-            </th>
-            <th>
-                Sexo
-            </th>
-            <th>
-                Nivel
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.cedula)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.edad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.sexo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nivel.nombreNivel)
-                </td>
-                <td>
-                    <a asp-action="EditEstudiante" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a>
-                    <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Eliminar</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="MyTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                Cédula
+                            </th>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Apellidos
+                            </th>
+                            <th>
+                                Edad
+                            </th>
+                            <th>
+                                Sexo
+                            </th>
+                            <th>
+                                Nivel
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.cedula)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.apellido)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.edad)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.sexo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nivel.nombreNivel)
+                                </td>
+                                <td>
+                                    <a asp-action="EditEstudiante" asp-route-id="@item.Id" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-default"><i class="glyphicon glyphicon-list"></i></a>
+                                    <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_DeleteDialog" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable();
+
+            var item_to_delete;
+
+            $('.deleteItem').click((e) => {
+                item_to_delete = e.currentTarget.dataset.id;
+            });
+
+            $("#btnYesDelete").click(function () {
+                window.location.href = '/Estudiante/DeleteEstudiante/' + item_to_delete;
+            });
+        });
+    </script>
+}
 
