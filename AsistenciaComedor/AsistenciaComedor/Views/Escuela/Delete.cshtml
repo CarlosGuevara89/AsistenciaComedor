@@ -40,7 +40,8 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <label for="mySubmit" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Eliminar</label>
+        <input id="mySubmit" type="submit" value="Go" class="hidden">
         <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>

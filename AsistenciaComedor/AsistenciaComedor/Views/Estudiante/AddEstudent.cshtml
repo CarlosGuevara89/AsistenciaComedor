@@ -17,8 +17,9 @@
             <partial name="_Estudiante"/>
 
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-success">Regresar</a>
+                <label for="mySubmit" class="btn btn-default"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</label>
+                <input id="mySubmit" type="submit" value="Guardar" class="hidden" />
+                <a asp-action="Index" class="btn btn-success"><i class="glyphicon glyphicon-arrow-left"></i> Regresar</a>
             </div>
         </form>
     </div>

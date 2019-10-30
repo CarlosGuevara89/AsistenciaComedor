@@ -22,7 +22,8 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Eliminar" class="btn btn-default" /> |
-        <a asp-action="Index" class="btn btn-success">Regresar</a>
+        <label for="mySubmit" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Eliminar</label>
+        <input id="mySubmit" type="submit" value="Go" class="hidden" >
+        <a asp-action="Index" class="btn btn-success"><i class="glyphicon glyphicon-arrow-left"></i> Regresar</a>
     </form>
 </div>
