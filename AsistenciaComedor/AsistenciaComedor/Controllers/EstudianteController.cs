@@ -120,6 +120,24 @@ namespace AsistenciaComedor.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> DetailsEstudiante(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var estudiante = await _dataContext.Estudiantes
+                .Include(e => e.Nivel)
+                .FirstOrDefaultAsync(e => e.Id == id);
+            if (estudiante == null)
+            {
+                return NotFound();
+            }
+
+            return View(estudiante);
+        }
+
     }
 
 }
