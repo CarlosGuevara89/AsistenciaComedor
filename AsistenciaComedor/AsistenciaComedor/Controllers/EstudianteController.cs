@@ -28,9 +28,6 @@ namespace AsistenciaComedor.Controllers
         //Get: Estudiantes
         public ActionResult Index()
         {
-            var items = _combosHelper.GetComboNivel();
-            ViewBag.Niveles = items;
-
             return View(_dataContext.Estudiantes
                 .Include(e => e.Nivel));
         }
@@ -56,14 +53,14 @@ namespace AsistenciaComedor.Controllers
                 await _dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            else if (model == null)
+             if (model == null)
             {
                 model.Niveles = _combosHelper.GetComboNivel();
                 return View(model);
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Ya se encuentra registrado...");
+                ModelState.AddModelError(string.Empty, "El estudiante .......");
                 model.Niveles = _combosHelper.GetComboNivel();
                 return View(model);
             }
