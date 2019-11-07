@@ -31,6 +31,9 @@ namespace AsistenciaComedor.Data.Entities
 
         public Nivel Nivel { get; set; }
 
+        [Display(Name = "Nombre de estudiante")]
+        public string nombreCompleto => $"{nombre} {apellido}";
+
     }
 
 }

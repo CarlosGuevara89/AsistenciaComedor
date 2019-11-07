@@ -117,7 +117,7 @@ namespace AsistenciaComedor.Controllers
         }
 
         // GET: Nivels/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteNivel(int? id)
         {
             if (id == null)
             {
@@ -125,21 +125,12 @@ namespace AsistenciaComedor.Controllers
             }
 
             var nivel = await _context.Niveles
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(n => n.Estudiantes)
+                .FirstOrDefaultAsync(n => n.Id == id.Value);
             if (nivel == null)
             {
                 return NotFound();
             }
-
-            return View(nivel);
-        }
-
-        // POST: Nivels/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var nivel = await _context.Niveles.FindAsync(id);
             _context.Niveles.Remove(nivel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

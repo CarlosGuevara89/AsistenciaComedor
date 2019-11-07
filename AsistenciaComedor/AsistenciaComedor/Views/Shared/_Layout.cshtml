@@ -17,7 +17,7 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -28,12 +28,22 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">AsistenciaComedor</a>
             </div>
+           
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Escuela" asp-action="Index">Datos Escuela</a></li>
-                    <li><a asp-area="" asp-controller="Estudiante" asp-action="Index">Estudiantes</a></li>
-                    <li><a asp-area="" asp-controller="Nivels" asp-action="Index">Niveles</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Estudiantes<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Estudiante" asp-action="Index" class="dropdown-item">Mantenimiento</a></li>
+                            <li><a asp-area="" asp-controller="Nivels" asp-action="Index" class="dropdown-item">Niveles Escolares</a></li>
+      
+                            <li role="separator" class="divider"></li>
+                            <li><a asp-area="" asp-controller="Asistencia" asp-action="Index" class="dropdown-item">Control Asistencia al comedor</a></li>
+                        </ul>
+                    </li>
+                    <li><a asp-area="" asp-controller="Escuela" asp-action="Index">Información de la Escuela</a></li>
+                    <li></li>
+                    <li></li>
                 </ul>
             </div>
         </div>
@@ -44,7 +54,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer class="panel-footer">
+        <footer>
             <p>&copy; 2019 - Asistencia Comedor</p>
         </footer>
     </div>

@@ -48,5 +48,14 @@ namespace AsistenciaComedor.Helpers
                 Niveles = _combosHelper.GetComboNivel()
             };
         }
+
+        public async Task<Asistencia> ToAsistenciaAsync(int id, string fecha)
+        {
+            return new Asistencia
+            {
+                fecha = Convert.ToDateTime(fecha),
+                Estudiante = await _dataContext.Estudiantes.FindAsync(id)
+            };
+        }
     }
 }

@@ -1,4 +1,28 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
+    //Cargar dataTable
+    $('#MyTable').DataTable();
 
-// Write your JavaScript code.
+
+    //Habilitar el datapicker
+    $('#mydatetimepicker').datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    //Pasar a datos a un post
+    $('.asistencia').click((e) => {
+        var Id = e.currentTarget.dataset.id;
+        var fecha = $('#fecha').val();
+      
+        $.ajax({
+            method: "POST",
+            url: "/Asistencia/AddAsistencia",
+            data: { id: Id, fecha: fecha },
+            success: function (data) {
+                sweetAlert("Guarado con exito");
+            }
+         })
+    });
+   
+});

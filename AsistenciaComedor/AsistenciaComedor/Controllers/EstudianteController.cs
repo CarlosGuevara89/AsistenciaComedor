@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using AsistenciaComedor.Data;
+﻿using AsistenciaComedor.Data;
 using AsistenciaComedor.Helpers;
 using AsistenciaComedor.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace AsistenciaComedor.Controllers
@@ -48,23 +47,26 @@ namespace AsistenciaComedor.Controllers
         {
             if (ModelState.IsValid)
             {
-                var estudiante = await _converterHelper.ToEstudianteAsync(model, true);
-                _dataContext.Estudiantes.Add(estudiante);
-                await _dataContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (!EstudianteExists(model.cedula))
+                {
+                    var estudiante = await _converterHelper.ToEstudianteAsync(model, true);
+                    _dataContext.Estudiantes.Add(estudiante);
+                    await _dataContext.SaveChangesAsync();
+                    ViewBag.mensaje = "¡Registro guardado correctamente!";
+                    ViewBag.identificador = 1;
+                    model.Niveles = _combosHelper.GetComboNivel();
+                    return View(model); 
+                }
+                ViewBag.mensaje = "¡El estudiante ya existe, verfique por favor!";
+                ViewBag.identificador = 2;
             }
-             if (model == null)
+            if (model == null)
             {
-                model.Niveles = _combosHelper.GetComboNivel();
                 return View(model);
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "El estudiante .......");
-                model.Niveles = _combosHelper.GetComboNivel();
-                return View(model);
-            }
-
+            
+            model.Niveles = _combosHelper.GetComboNivel();
+            return View(model);
         }
 
         //Get: Edit Estudiante
@@ -99,11 +101,11 @@ namespace AsistenciaComedor.Controllers
             }
 
             return View(model);
-        } 
+        }
 
-        public async Task<IActionResult>DeleteEstudiante(int? id)
+        public async Task<IActionResult> DeleteEstudiante(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -138,8 +140,13 @@ namespace AsistenciaComedor.Controllers
             return View(estudiante);
         }
 
+        private bool EstudianteExists(string cedula)
+        {
+            return _dataContext.Estudiantes.Any(e => e.cedula == cedula);
+        }
+
     }
 
 }
-    
+
 

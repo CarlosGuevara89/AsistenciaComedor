@@ -69,7 +69,7 @@
                                 <td>
                                     <a asp-action="EditEstudiante" asp-route-id="@item.Id" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
                                     <a asp-action="DetailsEstudiante" asp-route-id="@item.Id" class="btn btn-default"><i class="glyphicon glyphicon-list"></i></a>
-                                    <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
+                                    <button data-id="@item.Id" class="btn btn-danger deleteEstudent" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
                                 </td>
                             </tr>
                         }
@@ -82,24 +82,24 @@
 
 <partial name="_DeleteDialog" />
 
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/jquery.dataTables.min.js"></script>
+    <script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#MyTable').DataTable();
+        //eliminar registros
+        var item_to_delete;
 
-            var item_to_delete;
-
-            $('.deleteItem').click((e) => {
-                item_to_delete = e.currentTarget.dataset.id;
-            });
-
-            $("#btnYesDelete").click(function () {
-                window.location.href = '/Estudiante/DeleteEstudiante/' + item_to_delete;
-            });
+        $('.deleteEstudent').click((e) => {
+            item_to_delete = e.currentTarget.dataset.id;
         });
+
+        $("#btnYesDelete").click(function () {
+            window.location.href = '/Estudiante/DeleteEstudiante/' + item_to_delete;
+        });
+
+        $('#myModal').modal('show');
+
     </script>
 }
-

@@ -8,6 +8,8 @@ namespace AsistenciaComedor.Helpers
     {
         Task<Estudiante> ToEstudianteAsync(EstudianteViewModel model, bool isNew);
 
+        Task<Asistencia> ToAsistenciaAsync(int id, string fecha);
+
         EstudianteViewModel ToEstudianteViewModel(Estudiante estudiante);
     }
 }
