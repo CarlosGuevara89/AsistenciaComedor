@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AsistenciaComedor.Data.Entities
 {
@@ -31,8 +32,12 @@ namespace AsistenciaComedor.Data.Entities
 
         public Nivel Nivel { get; set; }
 
+        public ICollection<Asistencia> Asistencias{ get; set; }
+
         [Display(Name = "Nombre de estudiante")]
         public string nombreCompleto => $"{nombre} {apellido}";
+
+
 
     }
 

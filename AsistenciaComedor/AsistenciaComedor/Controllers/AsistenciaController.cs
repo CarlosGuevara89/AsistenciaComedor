@@ -1,10 +1,7 @@
 ﻿using AsistenciaComedor.Data;
-using AsistenciaComedor.Data.Entities;
 using AsistenciaComedor.Helpers;
-using AsistenciaComedor.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 
 namespace AsistenciaComedor.Controllers
@@ -22,7 +19,7 @@ namespace AsistenciaComedor.Controllers
         }
         public IActionResult Index()
         {
-            if (TempData["mensaje"] != null )
+            if (TempData["mensaje"] != null)
                 ViewBag.mensaje = TempData["mensaje"].ToString();
 
             return View(_dataContext.Estudiantes
@@ -32,7 +29,7 @@ namespace AsistenciaComedor.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsistencia(int Id, string fecha)
         {
-            if(fecha == null)
+            if (fecha == null)
             {
                 TempData["mensaje"] = "¡Por favor seleccione una fecha para continuar!";
                 return RedirectToAction("Index");
@@ -42,6 +39,6 @@ namespace AsistenciaComedor.Controllers
             await _dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-            
+
     }
 }

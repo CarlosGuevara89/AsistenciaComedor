@@ -129,15 +129,17 @@ namespace AsistenciaComedor.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _dataContext.Estudiantes
+            var asistencia = await _dataContext.Estudiantes
+                .Include(e => e.Asistencias)
                 .Include(e => e.Nivel)
                 .FirstOrDefaultAsync(e => e.Id == id);
-            if (estudiante == null)
+
+            if (asistencia == null)
             {
                 return NotFound();
             }
 
-            return View(estudiante);
+            return View(asistencia);
         }
 
         private bool EstudianteExists(string cedula)

@@ -1,55 +1,57 @@
 ﻿@model AsistenciaComedor.Data.Entities.Estudiante
 
-@{
-    ViewData["Title"] = "Deatalles";
+@{ ViewData["Title"] = "Detalle de estudiante";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Detalles</h2>
+<h2>Detalle del Estudiante</h2>
 
-<div>
-    <h4>Estudiante</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.cedula)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.cedula)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.apellido)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.apellido)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.edad)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.edad)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.sexo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.sexo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nivel.nombreNivel)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nivel.nombreNivel)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="EditEstudiante" asp-route-id="@Model.Id" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
-    <a asp-action="Index" class="btn btn-success"><i class="glyphicon glyphicon-arrow-left"></i> Regresar</a>
-</div>
+@if (Model.Asistencias.Count == 0)
+{
+    <br />
+    <br />
+    <h4 class="jumbotron">¡Aún no tiene asistencias al comedor!</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Nivel
+                </th>
+                <th>
+                    Cantidad de asistencias al Comedor Escolar
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.nombreCompleto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Nivel.nombreNivel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Asistencias.Count)
+                </td>
+                <td>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    <div class="text-right">
+        <a asp-action="#" asp-route-id="@Model.Id" class="btn btn-default"><i class="glyphicon glyphicon-print"></i> Imprimir</a>
+        <a asp-action="Index" class="btn btn-success"><i class="glyphicon glyphicon-arrow-left"></i> Regresar</a>
+    </div>
+}
+
+
+
