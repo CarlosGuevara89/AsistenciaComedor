@@ -57,7 +57,7 @@ namespace AsistenciaComedor.Controllers
                     model.Niveles = _combosHelper.GetComboNivel();
                     return View(model); 
                 }
-                ViewBag.mensaje = "¡El estudiante ya existe, verfique por favor!";
+                ViewBag.mensaje = "¡El número de identificación que intenta registrar, ya existe en la base de datos, verfique por favor!";
                 ViewBag.identificador = 2;
             }
             if (model == null)
